@@ -2,11 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MoviesApp from './MoviesApp';
 import reportWebVitals from './reportWebVitals';
+import { StoreProvider } from 'easy-peasy';
+import { store } from './redux/store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <MoviesApp />
-  </React.StrictMode>,
+  <StoreProvider store={store}>
+    <React.StrictMode>
+      <MoviesApp />
+    </React.StrictMode>
+  </StoreProvider>,
   document.getElementById('root')
 );
 
