@@ -5,27 +5,25 @@ import { Container, IconButton, InputBase, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import Paper from '@mui/material/Paper';
 import { useLocalStorage } from 'usehooks-ts';
-import fetchMovies from '../providers/fetchMovies';
+import { useStoreState } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 
 export default function MoviesScreen () {
 
+  const loadMovies = useStoreActions((actions) => actions.loadMovies);
+  const movies = useStoreState((state) => state.movies);
+
   const [title, setTitle] = useState('');
-  const [movies, setMovies] = useState([]);
   const [lastSearch, setLastSearch] = useLocalStorage('lastSearch', 'spiderman');
 
   useEffect(() => { // to load initial data
-    loadData();
-  }, []);
+    loadMovies(lastSearch);
+  }, [ loadMovies, lastSearch ]);
 
   const handleSearch = (event) => {
     event.preventDefault();
+    loadMovies(title);
     setLastSearch(title);
-    loadData();
-  }
-
-  async function loadData() {
-    const res = await fetchMovies(lastSearch);
-    setMovies(res.results);
   }
 
   return (
