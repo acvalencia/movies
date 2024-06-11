@@ -6,6 +6,8 @@ name: CI
 on:
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # Permite la ejecución manual desde la sección Actions
+
 
 jobs:
   build:
